@@ -18,14 +18,13 @@ class LTILoginHandler(BaseHandler):
         self.redirect(_url)
 
     def post(self):
+        #This should become more than one method. 
         username = self.authenticator.usernamefield
         key = self.authenticator.key
         secret = self.authenticator.secret
         user_id = self.get_body_argument(username, default=None, strip=False)
         email = self.get_body_argument('lis_person_contact_email_primary', default=None, strip=False)
         lti_key = self.get_body_argument("oauth_consumer_key", default=None, strip=False)
-        self.log.info("KEY = " + lti_key + "user_id = " + user_id + "email=" + email)
-        a = json.dumps({ k: self.get_argument(k) for k in self.request.arguments })
         oauth_server = oauth.OAuthServer(oauth_store.LTI_OAuthDataStore(key, secret))
         oauth_server.add_signature_method(oauth.OAuthSignatureMethod_PLAINTEXT())
         oauth_server.add_signature_method(oauth.OAuthSignatureMethod_HMAC_SHA1())
@@ -41,9 +40,11 @@ class LTILoginHandler(BaseHandler):
             consumer = None
             print(oauth_error)
             print (err)
+            #if we get here, there was an issue, fail and raise a 401
             raise web.HTTPError(401)
 
         if consumer is not None:
+           #oauth was good. 
            user = self.user_from_username(user_id)
            self.set_login_cookie(user)
            self.redirect(url_path_join(self.hub.server.base_url, 'home'))
@@ -51,7 +52,7 @@ class LTILoginHandler(BaseHandler):
 
 class LTIAuthenticator(Authenticator):
     """
-    Accept the authenticated JSON Web Token from header.
+    Do some LTI 
     """
     usernamefield = Unicode(
         default_value='user_id',
