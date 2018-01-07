@@ -26,7 +26,6 @@ class LTILoginHandler(BaseHandler):
         email = self.get_body_argument('lis_person_contact_email_primary', default=None, strip=False)
         lti_key = self.get_body_argument("oauth_consumer_key", default=None, strip=False)
         oauth_server = oauth.OAuthServer(oauth_store.LTI_OAuthDataStore(key, secret))
-        oauth_server.add_signature_method(oauth.OAuthSignatureMethod_PLAINTEXT())
         oauth_server.add_signature_method(oauth.OAuthSignatureMethod_HMAC_SHA1())
         full_uri = self.authenticator.url 
         c = dict()
