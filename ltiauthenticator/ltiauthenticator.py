@@ -7,7 +7,10 @@ from traitlets import Unicode
 from ltioauth import oauth
 from ltioauth import oauth_store
 
-
+##This is a subclass of a handler to deal with logins.  There are 2 methods here, one for get, one for post.  The request comes in as a post, then is redirect to a get.
+## Remember to setup the config vars as defined at the bottom.  
+## At some poiint the validation under post should be moved to a dedicated method.  
+## Also maybe wrap the entire post tasks in a try catch block. 
 class LTILoginHandler(BaseHandler):
     def get(self):
         _url = url_path_join(self.hub.server.base_url, 'home')
