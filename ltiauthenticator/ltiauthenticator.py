@@ -6,7 +6,6 @@ from tornado import gen, web
 from traitlets import Unicode
 from ltioauth import oauth
 from ltioauth import oauth_store
-from pprint import pprint
 
 
 class LTILoginHandler(BaseHandler):
