@@ -7,7 +7,7 @@ from traitlets import Unicode
 from ltioauth import oauth
 from ltioauth import oauth_store
 from pprint import pprint
-import json
+
 
 class LTILoginHandler(BaseHandler):
     def get(self):
