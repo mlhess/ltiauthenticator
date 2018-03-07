@@ -34,16 +34,6 @@ class LTILoginHandler(BaseHandler):
         for f in self.request.arguments:
             c[f] = self.get_argument(f, default=None, strip=False)
         oauth_request = oauth.OAuthRequest.from_request('POST', full_uri, None, c, query_string=self.request.query)
-        try:
-            consumer, token, params = oauth_server.verify_request(oauth_request)
-        except oauth.OAuthError as err:
-            oauth_error = "OAuth Security Validation failed:"+err.message
-            consumer = None
-            print(oauth_error)
-            print (err)
-            #if we get here, there was an issue, fail and raise a 401
-            raise web.HTTPError(401)
-
         if consumer is not None:
            #oauth was good. 
            user = self.user_from_username(user_id)
