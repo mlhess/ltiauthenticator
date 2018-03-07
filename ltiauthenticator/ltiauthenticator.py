@@ -34,6 +34,7 @@ class LTILoginHandler(BaseHandler):
         for f in self.request.arguments:
             c[f] = self.get_argument(f, default=None, strip=False)
         oauth_request = oauth.OAuthRequest.from_request('POST', full_uri, None, c, query_string=self.request.query)
+        consumer = key
         if consumer is not None:
            #oauth was good. 
            user = self.user_from_username(user_id)
