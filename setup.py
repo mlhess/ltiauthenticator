@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='jupyterhub-ltiauthenticator',
-    version='0.1',
+    version='0.1a',
     description='LTI',
     license='Apache 2.0',
     tests_require = [
